@@ -30,16 +30,35 @@ TODO: Make click function for the day blocks save button. Reference the event de
 // Our moment js call should be something like this
 let momentTime = moment().format('LT');
 
+// var fullDaySchedule = {
+// 	900 : "Test",
+// 	1000 : "Test",
+// 	1100 : "Test",
+// 	1200 : "alsdfjlf",
+// 	100 : "alsfldsfj",
+// 	200 : "alsdjlkdf",
+// 	300 : "sdfklsfdj",
+// 	400 : "sdflksldfj",
+// 	500: "sdfkfdlkasf"
+// }// We will use logic to determine if it is AM or PM
+
+var fullDaySchedule = JSON.parse(localStorage.getItem("schedule"));
+
+// Set local storage
+localStorage.setItem("schedule", JSON.stringify(fullDaySchedule));
+
+console.log(fullDaySchedule)
 
 
 //globals, should we mess with jquery?
-
 const containerEL = $(".container");
 
-
+//In the logic, need to add classes on the text area to have the right colors
+let timeBlock = `
+<div data-time="900" class="time-block"><div class="time-display"></div><textarea class="present"></textarea><button class="saveBtn"><i class="fas fa-save"></i></button></div>
+`
 
 //Lets put the time and date up in the header
-
 function dayAndDate(){
 	let date = moment().format("dddd, MMMM Do");
 	document.querySelector("#currentDay").textContent = date;
