@@ -31,15 +31,44 @@ TODO: Make click function for the day blocks save button. Reference the event de
 let momentTime = moment().format('LT');
 
 // var fullDaySchedule = {
-// 	900 : "Test",
-// 	1000 : "Test",
-// 	1100 : "Test",
-// 	1200 : "alsdfjlf",
-// 	100 : "alsfldsfj",
-// 	200 : "alsdjlkdf",
-// 	300 : "sdfklsfdj",
-// 	400 : "sdflksldfj",
-// 	500: "sdfkfdlkasf"
+// 	900 : {
+// 		dayEvents: "",
+// 		timePeriod: "AM"
+// 	},
+// 	1000 : {
+// 		dayEvents: "",
+// 		timePeriod: "AM"
+// 	},
+// 	1100 : {
+// 		dayEvents: "",
+// 		timePeriod: "AM"
+// 	},
+// 	1200 : {
+// 		dayEvents: "",
+// 		timePeriod: "PM"
+// 	},
+// 	100 : {
+// 		dayEvents: "",
+// 		timePeriod: "PM"
+// 	},
+// 	200 : {
+// 		dayEvents: "",
+// 		timePeriod: "PM"
+// 	},
+// 	300 : {
+// 		dayEvents: "",
+// 		timePeriod: "PM"
+// 	},
+// 	400 : {
+// 		dayEvents: "",
+// 		timePeriod: "PM"
+// 	},
+// 	500 : {
+// 		dayEvents: "",
+// 		timePeriod: "PM"
+// 	}
+// }
+
 // }// We will use logic to determine if it is AM or PM
 
 var fullDaySchedule = JSON.parse(localStorage.getItem("schedule"));
