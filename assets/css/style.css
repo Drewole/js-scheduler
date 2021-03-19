@@ -30,8 +30,7 @@ textarea {
      border-radius: 15px;
 }
 .time-display {
-     border-top: 1px solid #000;
-     border-bottom: 1px solid #000;
+     border-top: 1px solid rgb(189, 188, 188);
      padding-top: 10px;
 }
 
@@ -63,14 +62,19 @@ textarea {
 }
 
 .saveBtn {
-     border-left: 1px solid black;
+     border: 1px solid #067b96;
      border-top-right-radius: 15px;
      border-bottom-right-radius: 15px;
      background-color: #06aed5;
      color: white;
+     transition: backgroundColor 0.2s ease-in-out;
 }
 
-.saveBtn i:hover {
+.saveBtn:hover {
+     background-color: #21c8ee;
+}
+.saveBtn:hover i {
      font-size: 20px;
-     transition: all 0.3s ease-in-out;
+     color: #046277;
+     transition: all 0.2s ease-in-out;
 }
