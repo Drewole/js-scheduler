@@ -27,21 +27,16 @@ function letsMakeTimeArray(start, end) {
 	}
 	return timeArray;
 }
-let timeArray = letsMakeTimeArray(9, 17); // 1 - 24 scale, I think the intent is obvious. First number is start time, second is end time
+var timeArray = letsMakeTimeArray(9, 17); // 1 - 24 scale, I think the intent is obvious. First number is start time, second is end time
 
 //globals, should we mess with jquery? 
 const containerEL = document.querySelector(".container");
 const elemContainer = $(".container");
 
 // Retrive any data from local storage
-// var timeArray = JSON.parse(localStorage.getItem("schedule"));
+var timeArray = JSON.parse(localStorage.getItem("schedule"));
 
-// Send to local storage
-function getFromLocalStorage(items) {
-	items = JSON.parse(localStorage.setItem("schedule"));
-	console.log("Local storage has been retrieved.")
-}
-// getFromLocalStorage(timeArray); // Sending the time arry to local 
+
 
 
 /*
@@ -99,7 +94,7 @@ function sendToLocalStorage(items) {
 	localStorage.setItem("schedule", JSON.stringify(items));
 	console.log("Local storage has been updated.")
 }
-sendToLocalStorage(timeArray); // Sending the time arry to local 
+// sendToLocalStorage(timeArray); // Sending the time arry to local 
 
 
 // Go through our time array and put it on the page plz
@@ -135,16 +130,18 @@ makeTimeSlots(timeArray); // Calling the function with our desired array
 
 
 // Lets save the item to local storage when they hit the save button
-elemContainer.on('click', '.saveBtn', function (event,arr) {
-
+elemContainer.on('click', '.saveBtn', function(e){
 	let buttonParentEl = $(this).closest(".row");
 	let todoEntry = buttonParentEl.find("textarea").val();
-	console.log(todoEntry)
+	let timeSlot = buttonParentEl.data("time");
 
+	for (i = 0; i < timeArray.length; i++) {	
 
-	
+		if ( timeSlot === timeArray[i].hour) {
+			timeArray[i].toDos = todoEntry;
+			sendToLocalStorage(timeArray);
+		}
 
+	}
 
-	
-	
 });
