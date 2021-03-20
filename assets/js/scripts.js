@@ -1,23 +1,21 @@
 
-
 // This grabs the current time for comparison below
-function currentTime() {
-	let currentTime = moment().format('h');
-	return currentTime;
+
+var currentTime = moment().format('HH');
+
+// Convert string number to number
+function convertToNumber(string) {
+	return Number(string);
 }
+
 
 // Function to generate time array with given start and end point.
 function letsMakeTimeArray(start, end) {
 	let timeArray = [];
-	for (time = start; time < (end + 1); time++) { // Need to add 1 to the end var to compensate for the 0 start index
-		if (time > 12) {
-			var j = time - 12;
-		} else {
-			j = time;
-		}
+	for (time = start; time < (end + 1); time++) { // Need to add 1 to the end var to compensate for the 0 start index	
 		var hourBlock =
 		{
-			hour: j,
+			hour: time,
 			ampm: "AM",
 			toDos: ""
 		}
@@ -31,12 +29,19 @@ function letsMakeTimeArray(start, end) {
 }
 let timeArray = letsMakeTimeArray(9, 17); // 1 - 24 scale, I think the intent is obvious. First number is start time, second is end time
 
-//globals, should we mess with jquery? -- Decided not to
+//globals, should we mess with jquery? 
 const containerEL = document.querySelector(".container");
+const elemContainer = $(".container");
 
 // Retrive any data from local storage
 // var timeArray = JSON.parse(localStorage.getItem("schedule"));
 
+// Send to local storage
+function getFromLocalStorage(items) {
+	items = JSON.parse(localStorage.setItem("schedule"));
+	console.log("Local storage has been retrieved.")
+}
+// getFromLocalStorage(timeArray); // Sending the time arry to local 
 
 
 /*
@@ -68,7 +73,17 @@ TODO: Make click function for the day blocks save button. Reference the event de
 
 */
 
-
+// Time Format Change
+function timeFormatChange12hr(time) {
+	let timeConverted = convertToNumber(time)
+	var j;
+	if (timeConverted > 12) {
+		j = timeConverted - 12;
+	} else {
+		j = timeConverted;
+	}
+	return j;
+}
 
 
 
@@ -79,42 +94,57 @@ function dayAndDateHeader() {
 }
 dayAndDateHeader();
 
+// Send to local storage
+function sendToLocalStorage(items) {
+	localStorage.setItem("schedule", JSON.stringify(items));
+	console.log("Local storage has been updated.")
+}
+sendToLocalStorage(timeArray); // Sending the time arry to local 
 
 
-// Go through our array and put it on the page plz
+// Go through our time array and put it on the page plz
 function makeTimeSlots(arr) {
 
 	for (i = 0; i < arr.length; i++) {
 
 		//Lets do some logic to see what class we need to be applying to the textarea
 		let itemClass = "past";
-		if (arr[i].hour > currentTime) {
+		if (convertToNumber(arr[i].hour) > convertToNumber(currentTime)) {
 			itemClass = "future";
-		} else if (arr[i].hour === currentTime){
-			itemClass = "preesent";
+		} else if (convertToNumber(arr[i].hour) === convertToNumber(currentTime)) {
+			itemClass = "present";
+		} else {
+			itemClass = "past"
 		}
 
 		//This will be our HTML
-		let hourTemplate = `<div class="time-display col-1">${arr[i].hour} ${arr[i].ampm}</div><textarea class="${itemClass} col-10">${arr[i].toDos}</textarea><button class="saveBtn col-1"><i class="fas fa-save"></i></button>`;
+		let hourTemplate = `<div class="time-display col-1">${timeFormatChange12hr(arr[i].hour)} ${arr[i].ampm}</div><textarea class="${itemClass} col-10">${arr[i].toDos}</textarea><button class="saveBtn col-1"><i class="fas fa-save"></i></button>`;
 
 		//Lets create the element, add some classes and set some attributes, then add it to the bottom of the container div
 		var timeBlock = document.createElement("div");
 		timeBlock.innerHTML = hourTemplate;
-		timeBlock.classList.add("time-block" , "row");
-		timeBlock.setAttribute("data-time", `${arr[i].hour}`);
-		
+		timeBlock.classList.add("time-block", "row");
+		timeBlock.setAttribute("data-time", arr[i].hour);
+
 		containerEL.appendChild(timeBlock);
 	}
-	
+
 
 }
 makeTimeSlots(timeArray); // Calling the function with our desired array
 
 
+// Lets save the item to local storage when they hit the save button
+elemContainer.on('click', '.saveBtn', function (event,arr) {
 
-// Send to local storage
-function sendToLocalStorage(items) {
-	localStorage.setItem("schedule", JSON.stringify(items));
-	console.log("Local storage has been updated.")
-}
-sendToLocalStorage(timeArray); // Sending the time arry to local storage
+	let buttonParentEl = $(this).closest(".row");
+	let todoEntry = buttonParentEl.find("textarea").val();
+	console.log(todoEntry)
+
+
+	
+
+
+	
+	
+});
