@@ -28,7 +28,7 @@ function letsMakeTimeArray(start, end) {
 	return timeArray;
 }
 var timeArray = letsMakeTimeArray(9, 17); // 1 - 24 scale, I think the intent is obvious. First number is start time, second is end time
-
+sendToLocalStorage(timeArray)
 //globals, should we mess with jquery? 
 const containerEL = document.querySelector(".container");
 const elemContainer = $(".container");
