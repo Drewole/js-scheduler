@@ -7,11 +7,19 @@ var currentTime = moment().format('HH');
 function convertToNumber(string) {
 	return Number(string);
 }
+var timeArray = [];
 
+
+if (localStorage.getItem("schedule") === null) {
+	var timeArray = letsMakeTimeArray(9, 17); // 1 - 24 scale, I think the intent is obvious. First number is start time, second is end time
+	sendToLocalStorage(timeArray)
+}
+	// Retrive any data from local storage
+	var timeArray = JSON.parse(localStorage.getItem("schedule"));
 
 // Function to generate time array with given start and end point.
 function letsMakeTimeArray(start, end) {
-	let timeArray = [];
+	
 	for (time = start; time < (end + 1); time++) { // Need to add 1 to the end var to compensate for the 0 start index	
 		var hourBlock =
 		{
@@ -27,14 +35,11 @@ function letsMakeTimeArray(start, end) {
 	}
 	return timeArray;
 }
-var timeArray = letsMakeTimeArray(9, 17); // 1 - 24 scale, I think the intent is obvious. First number is start time, second is end time
-sendToLocalStorage(timeArray)
+
 //globals, should we mess with jquery? 
 const containerEL = document.querySelector(".container");
 const elemContainer = $(".container");
 
-// Retrive any data from local storage
-var timeArray = JSON.parse(localStorage.getItem("schedule"));
 
 
 
